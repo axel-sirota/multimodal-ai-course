@@ -1,0 +1,20 @@
+[Unit]
+Description=Ollama API Server
+After=network.target ollama.service
+Requires=ollama.service
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu
+Environment="HOME=/home/ubuntu"
+Environment="PATH=/usr/local/bin:/usr/bin:/bin"
+Environment="API_TOKEN=4cbd67c87dd9080c464f0427547942eee4b1a9b76ddf6eec241f0ca60fbea2db"
+Environment="LOG_GROUP=/aws/ec2/ollama-course"
+Environment="AWS_REGION=us-east-1"
+ExecStart=/home/ubuntu/.venv/bin/python3 /home/ubuntu/ollama_server.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

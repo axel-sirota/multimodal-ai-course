@@ -205,3 +205,75 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Terraform
+# Local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# Crash log files
+crash.log
+crash.*.log
+
+# Exclude all .tfvars files, which are likely to contain sensitive data
+*.tfvars
+*.tfvars.json
+
+# Ignore override files as they are usually used for local dev
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+# Terraform lock files
+.terraform.lock.hcl
+
+# Claude Code configuration
+CLAUDE.md
+
+# Course development
+TODOS.md
+docs/
+
+# SSH Keys and certificates
+*.pem
+*.key
+*.pub
+.ssh/
+id_rsa*
+id_dsa*
+id_ecdsa*
+id_ed25519*
+
+# AWS credentials
+.aws/
+credentials
+config
+
+# API keys and secrets
+.env.local
+.env.*.local
+secrets.json
+*secret*
+*token*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE specific
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.bak
+*~

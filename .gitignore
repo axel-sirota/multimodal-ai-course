@@ -242,6 +242,14 @@ CLAUDE.md
 TODOS.md
 docs/
 
+# Scripts with API keys - CRITICAL SECURITY
+scripts/
+scripts/*
+*.py
+
+# Generated images
+images/
+
 # SSH Keys and certificates
 *.pem
 *.key
@@ -277,3 +285,7 @@ Thumbs.db
 *.tmp
 *.bak
 *~
+
+# Test results and reports
+ollama_test_results_*.json
+*_test_results_*.json

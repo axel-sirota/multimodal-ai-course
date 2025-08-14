@@ -10,5 +10,21 @@ variable "instance_type" {
 
 variable "api_token" {
   description = "Simple token for API access"
-  default     = "4cbd67c87dd9080c464f0427547942eee4b1a9b76ddf6eec241f0ca60fbea2db"
+  type        = string
+  sensitive   = true
+  # No default - must be provided via terraform.tfvars
+}
+
+variable "ssh_key_name" {
+  description = "AWS EC2 Key Pair name for SSH access"
+  type        = string
+  sensitive   = true
+  # No default - must be provided via terraform.tfvars
+}
+
+variable "allowed_ssh_cidr" {
+  description = "CIDR block allowed for SSH access"
+  type        = string
+  sensitive   = true
+  # No default - must be provided via terraform.tfvars
 }

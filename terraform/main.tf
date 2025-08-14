@@ -36,7 +36,7 @@ resource "aws_security_group" "ollama_sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["186.57.56.149/32"] # Your IP for SSH
+    cidr_blocks = [var.allowed_ssh_cidr]
   }
 
   egress {
@@ -120,7 +120,7 @@ resource "aws_instance" "ollama_server" {
   ami           = data.aws_ami.deep_learning.id
   instance_type = var.instance_type
   
-  key_name = "default_pem" # Using your default_pem key pair
+  key_name = var.ssh_key_name
   
   vpc_security_group_ids = [aws_security_group.ollama_sg.id]
   iam_instance_profile   = aws_iam_instance_profile.ollama_profile.name

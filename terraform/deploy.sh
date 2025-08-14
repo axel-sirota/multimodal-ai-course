@@ -12,8 +12,18 @@ if [ -z "$1" ]; then
 fi
 
 INSTANCE_HOST=$1
-SSH_KEY="${SSH_KEY:-~/.ssh/default_pem.pem}"
-API_TOKEN="${API_TOKEN:-4cbd67c87dd9080c464f0427547942eee4b1a9b76ddf6eec241f0ca60fbea2db}"
+# Check required environment variables
+if [ -z "$SSH_KEY" ]; then
+    echo "Error: SSH_KEY environment variable is required"
+    echo "Export your SSH key path: export SSH_KEY=~/.ssh/your-key.pem"
+    exit 1
+fi
+
+if [ -z "$API_TOKEN" ]; then
+    echo "Error: API_TOKEN environment variable is required"
+    echo "Export your API token: export API_TOKEN=your-secure-token"
+    exit 1
+fi
 
 echo "=== Deploying to $INSTANCE_HOST ==="
 echo "Using SSH key: $SSH_KEY"
@@ -32,8 +42,13 @@ ssh -o ConnectTimeout=5 -o StrictHostKeyChecking=no -i "$SSH_KEY" ubuntu@"$INSTA
 echo "Copying application files..."
 scp -i "$SSH_KEY" files/ollama_server.py ubuntu@"$INSTANCE_HOST":/home/ubuntu/
 scp -i "$SSH_KEY" files/nginx.conf ubuntu@"$INSTANCE_HOST":/tmp/
-scp -i "$SSH_KEY" files/ollama-app.service ubuntu@"$INSTANCE_HOST":/tmp/
 scp -i "$SSH_KEY" files/ollama-override.conf ubuntu@"$INSTANCE_HOST":/tmp/
+
+# Create service file with actual API token
+echo "Creating systemd service file with API token..."
+sed "s/PLACEHOLDER_API_TOKEN/$API_TOKEN/g" files/ollama-app.service > /tmp/ollama-app.service
+scp -i "$SSH_KEY" /tmp/ollama-app.service ubuntu@"$INSTANCE_HOST":/tmp/
+rm /tmp/ollama-app.service
 
 # Configure instance
 echo "Configuring instance..."
